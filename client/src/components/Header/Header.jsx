@@ -3,6 +3,7 @@ import { SlLocationPin } from 'react-icons/sl'
 import { BsSearch } from 'react-icons/bs'
 import { BiCart } from 'react-icons/bi'
 import { TbWorld } from 'react-icons/tb'
+import { Link } from 'react-router-dom'
 import classes from './Header.module.css'
 import LowerHeader from './LowerHeader'
 
@@ -14,7 +15,7 @@ const Header = () => {
 
           {/* Logo */}
           <div className={classes.logo_container}>
-            <a href="/">
+            <Link to="/">
               <div className={classes.logo_box}>
                 <BiCart size={22} color="white" />
               </div>
@@ -23,7 +24,7 @@ const Header = () => {
                 <span className={classes.logo_hub}>Hub</span>
                 <div className={classes.logo_sub}>STORE</div>
               </div>
-            </a>
+            </Link>
           </div>
 
           {/* Delivery Location */}
@@ -63,29 +64,29 @@ const Header = () => {
 
           {/* Sign In */}
           <div className={classes.signin}>
-            <a href="/login">
+            <Link to="/signin">
               <p>Hello, Guest</p>
               <span>Account & Lists</span>
-            </a>
+            </Link>
           </div>
 
           {/* Returns & Orders */}
           <div className={classes.orders}>
-            <a href="/orders">
+            <Link to="/orders">
               <p>Returns</p>
               <span>& Orders</span>
-            </a>
+            </Link>
           </div>
 
           {/* Cart */}
           <div className={classes.order_container}>
-            <a href="/cart" className={classes.cart}>
+            <Link to="/cart" className={classes.cart}>
               <div className={classes.cart_icon_wrap}>
                 <BiCart size={32} color="white" />
                 <span className={classes.cart_count}>0</span>
               </div>
               <p>Cart</p>
-            </a>
+            </Link>
           </div>
 
         </div>
