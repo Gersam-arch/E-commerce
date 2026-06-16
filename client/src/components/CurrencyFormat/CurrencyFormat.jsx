@@ -1,9 +1,11 @@
 import React from 'react';
 import numeral from 'numeral';
+import customPrices from '../../Api/customPrices';
 
-const CurrencyFormat = ({ amount}) => {
-    const formattedAmount = numeral(amount).format('$0,0.00');
-    return <div>{formattedAmount}</div>;
+const CurrencyFormat = ({ productId }) => {
+  const etbAmount = customPrices[productId] || 0;
+  const formattedAmount = numeral(etbAmount).format('0,0');
+  return <span>{formattedAmount} ETB</span>;
 };
 
-export default CurrencyFormat
+export default CurrencyFormat;
