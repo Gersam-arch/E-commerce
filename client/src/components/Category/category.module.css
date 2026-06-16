@@ -43,3 +43,13 @@
     grid-template-columns: repeat(4, 1fr);
     place-items: center;
 }
+.categoryContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px 20px;
+  background: #f3f3f3;
+  position: relative;
+  z-index: 2;
+}
