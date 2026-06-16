@@ -1,39 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { productUrl } from "../../Api/endPoints";
-import ProductCard from "../../components/Product/ProductCardComponent";
+import ProductCardComponent from "../../components/Product/ProductCardComponent";
+import Loader from "../../components/Loader/Loader";
 import classes from "../../components/Product/product.module.css";
-function Result() {
-    const [results, setResults] = React.useState([]);
-    const { categoryName } = useParams();
-    React.useEffect(() => {
 
+function Result() {
+    const [results, setResults] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+    const { categoryName } = useParams();
+
+    useEffect(() => {
+        setLoading(true);
         axios.get(`${productUrl}/products/category/${categoryName}`)
         .then((res) => {
-            setResults(res.data)
+            setResults(res.data);
+            setLoading(false);
         }).catch((err) => {
-            console.log(err)
-        })
+            console.log(err);
+            setLoading(false);
+        });
     }, []);
 
     return (
         <Layout>
-    <section>
-        <h1 style={{ padding: "30px"}}>Results</h1>
-        <p style={{ padding: "30px"}}>Category / {categoryName}</p>
-        <hr/>
-            <div className={classes.product_container}>
-                {results.map((product) => (
-                    <ProductCard
-                        key={product.id}
-
-                        product={product}
-                    />
-                ))}
-            </div>
-    </section>
+            <section>
+                <h1 style={{ padding: "30px"}}>Results</h1>
+                <p style={{ padding: "30px"}}>Category / {categoryName}</p>
+                <hr/>
+                {isLoading ? (<Loader />) : (
+                    <div className={classes.product_container}>
+                        {results.map((product) => (
+                            <ProductCardComponent
+                                key={product.id}
+                                renderAdd={true}
+                                product={product}
+                            />
+                        ))}
+                    </div>
+                )}
+            </section>
         </Layout>
     );
 }
