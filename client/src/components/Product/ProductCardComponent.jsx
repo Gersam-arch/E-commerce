@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import { Type } from '../../Utility/action.type';
 import { DataContext } from '../DataProvider/DataProvider';
 
-function ProductCard({ product, flex, renderDesc }) {
-  const [state, dispatch] = useContext(DataContext);
+function ProductCard({ product, flex, renderDesc, renderAdd }) {
+  const [, dispatch] = useContext(DataContext);
 
   if (!product || !product.rating) return null;
 
@@ -34,9 +34,12 @@ function ProductCard({ product, flex, renderDesc }) {
           <small>{rating.count}</small>
         </div>
         <div><CurrencyFormat productId={id} /></div>
-        <button className={classes.button} onClick={addToCart}>
+        {
+          renderAdd && <button className={classes.button} onClick={addToCart}>
           Add to Cart
         </button>
+        }
+        
       </div>
     </div>
   );

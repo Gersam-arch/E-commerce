@@ -30,6 +30,7 @@ function ProductDetail() {
             <ProductCardComponent product={product} 
             flex={true}
             renderDesc={true}
+            renderAdd={true}
             />
         )}
     </Layout>
