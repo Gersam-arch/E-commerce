@@ -23,7 +23,7 @@ function Product() {
             isloading ? (<loader />) : ( <section className={classes.product_container}>
             {
                 products?.map((singleProduct) => {
-                    return <ProductCardComponent product={singleProduct} key={singleProduct.id} />
+                    return <ProductCardComponent renderDesc={false} renderAdd={true} product={singleProduct} key={singleProduct.id} />
                 })
             }
         </section>   ) 
