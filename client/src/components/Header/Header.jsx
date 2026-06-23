@@ -70,7 +70,7 @@ const Header = () => {
 
           {/* Sign In */}
           <div className={classes.signin}>
-            <Link to="/signin">
+            <Link to="/auth">
               <p>Hello, Guest</p>
               <span>Account & Lists</span>
             </Link>
