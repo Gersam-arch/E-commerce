@@ -1,44 +1,62 @@
 import React, { useState, useContext} from "react";
 import { BiCart } from "react-icons/bi";
-import { Link } from "react-router-dom"; // Add this import
+import { Link, useNavigate } from "react-router-dom"; // Add this import
 import classes from "./signup.module.css";
 import { auth } from "../../Utility/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { DataContext } from "../../components/DataProvider/DataProvider";
 import { Type } from "../../Utility/action.type";
+import {ClipLoader} from "react-spinners";
 
 function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState({
+    signIn: false,
+    signUp: false
+  });
   const [{ user}, dispatch] = useContext(DataContext);
-  console .log("user", user);
+  const navigate = useNavigate()
+
+
+
+  // console .log("user", user);
 
 
   const authhandler = (e) => {
     e.preventDefault();
     console.log("e.target.name", e.target.name);
     if (e.target.name === "login") {
+      setLoading({...loading, signIn: true })
         signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
             console.log("userCredential", userCredential);
             dispatch({
                 type: Type.SET_USER,
                 user: userCredential.user
             });
-        }).catch((error) => {
-            console.log("error", error);
+            setLoading({...loading, signIn: false })
+            navigate("/");
+        }).catch((err) => {
+            setError(err.message);
+            setLoading({...loading, signIn: false })
         });
 
   } else{
+    setLoading({...loading, signUp: true })
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
+      
          console.log("userCredential", userCredential);
          dispatch({
              type: Type.SET_USER,
              user: userCredential.user
          });
-        }).catch((error) => {
-            console.log("error", error);
+         setLoading({...loading, signUp: false })
+         navigate("/");
+        }).catch((err) => {
+            setError(err.message);
+            setLoading({...loading, signUp: false })
         });
   }
 }
@@ -69,7 +87,11 @@ function Auth() {
             <button type="submit"
              onClick={authhandler}
               name="login"
-             className={classes.login_button}>Sign In</button>
+             className={classes.login_button}>{
+              loading.signIn ? <ClipLoader color="#53aaf7" size={15}></ClipLoader> :(
+                "sign In"
+              )}
+              </button>
         </form>
         <p>Signing in your agree to the ShopHub conditons of use &
              sale. Please see our Privacy Policy, our Cookies Notice and our
@@ -77,7 +99,15 @@ function Auth() {
              <button type="submit"
               onClick={authhandler}
               name="SignUP"
-              className={classes.create_account_button}>Create your ShopHub Account</button>
+              className={classes.create_account_button}>{
+              loading.signUp ? <ClipLoader color="#53aaf7" size={15}></ClipLoader> :(
+                "Create your ShopHub account"
+              )}</button>
+              
+
+              {
+                error && <small style={{paddingTop: "5px", color: "red"}}>{error} </small>
+              }
     </div>
 
 </section>
