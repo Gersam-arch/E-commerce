@@ -134,6 +134,7 @@ function Payment() {
         callback: (data) => {
           if (data.status === "success" || data.status === "completed") {
             // Clear basket on success
+            dispatch({ type: Type.empty_basket });
             basket.forEach((item) =>
               dispatch({ type: Type.REMOVE_FROM_BASKET, id: item.id })
             );
