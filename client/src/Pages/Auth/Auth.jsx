@@ -1,6 +1,6 @@
 import React, { useState, useContext} from "react";
 import { BiCart } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom"; // Add this import
+import { Link, useNavigate, useLocation } from "react-router-dom"; // Add this import
 import classes from "./signup.module.css";
 import { auth } from "../../Utility/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
@@ -18,6 +18,8 @@ function Auth() {
   });
   const [{ user}, dispatch] = useContext(DataContext);
   const navigate = useNavigate()
+  const navStateData = useLocation();
+  console.log(navStateData); 
 
 
 
@@ -36,7 +38,7 @@ function Auth() {
                 user: userCredential.user
             });
             setLoading({...loading, signIn: false })
-            navigate("/");
+            navigate(navStateData?.state?.redirect || "/");
         }).catch((err) => {
             setError(err.message);
             setLoading({...loading, signIn: false })
@@ -53,7 +55,7 @@ function Auth() {
              user: userCredential.user
          });
          setLoading({...loading, signUp: false })
-         navigate("/");
+         navigate(navStateData?.state?.redirect || "/");
         }).catch((err) => {
             setError(err.message);
             setLoading({...loading, signUp: false })
@@ -75,6 +77,18 @@ function Auth() {
     {/* //{form } */}
     <div className={classes.login_container}>
         <h1>Sign In</h1>
+        {navStateData?.state?.msg && (
+  <small
+    style={{
+      padding: "5px",
+      textAlign: "center",
+      color: "red",
+      fontWeight: "bold",
+    }}
+  >
+    {navStateData?.state?.msg}
+  </small>
+)}
         <form action="">
             <div>
                 <label htmlFor="email">Email</label>

@@ -6,6 +6,9 @@ import CurrencyFormat from "../../components/CurrencyFormat/CurrencyFormat";
 import customPrices from "../../Api/customPrices";
 import classes from "./payment.module.css";
 import { Type } from "../../Utility/action.type";
+import { axiosInstance } from "../../Api/axios";
+import { clipLoader } from "react-spinners";
+import { db } from "../../Utility/firebase";
 
 // ─── Chapa inline checkout helper ───────────────────────────────────────────
 // Loads the Chapa inline script once and resolves when ready.
@@ -37,6 +40,7 @@ const CheckIcon = () => (
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
+
 
 // ─── Payment method card ─────────────────────────────────────────────────────
 function PaymentMethodCard({ id, selected, onSelect, label, description, icon }) {
@@ -85,6 +89,7 @@ function Payment() {
     (sum, item) => sum + (customPrices[item.id] || 0) * item.amount,
     0
   );
+  const[processing, setProcessing] = useState(false);
   const shipping = total > 5000 ? 0 : 150;
   const grandTotal = total + shipping;
 
@@ -146,37 +151,32 @@ function Payment() {
     }
   };
 
+
   // ── Chapa hosted redirect ───────────────────────────────────────────────
   const handleChapaHosted = async () => {
-    setError("");
-    setLoading(true);
-    try {
-      // Call your backend to initiate transaction and get the checkout_url
-      const res = await fetch("/api/chapa/initialize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: grandTotal,
-          currency: "ETB",
-          email: form.email,
-          first_name: form.firstName,
-          last_name: form.lastName,
-          phone_number: form.phone,
-          callback_url: `${window.location.origin}/result`,
-          return_url: `${window.location.origin}/result`,
-        }),
-      });
-      const data = await res.json();
-      if (data?.data?.checkout_url) {
-        window.location.href = data.data.checkout_url;
-      } else {
-        throw new Error(data.message || "Failed to initialize payment");
-      }
-    } catch (err) {
-      setError(err.message || "Payment initialization failed. Try again.");
-      setLoading(false);
+  setError("");
+  setLoading(true);
+  try {
+    const response = await axiosInstance.post("/accept-payment", {
+      amount: grandTotal,
+      currency: "ETB",
+      email: form.email,
+      first_name: form.firstName,
+      last_name: form.lastName,
+      phone_number: form.phone,
+    });
+
+    const checkoutUrl = response?.data?.data?.checkout_url;
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
+    } else {
+      throw new Error(response?.data?.message || "Failed to initialize payment");
     }
-  };
+  } catch (err) {
+    setError(err.response?.data?.error || err.message || "Payment initialization failed. Try again.");
+    setLoading(false);
+  }
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -187,6 +187,9 @@ function Payment() {
     if (paymentMethod === "chapa_inline") handleChapaInline();
     else handleChapaHosted();
   };
+  const handelpayment = (e) => {
+    e.preventDefault();
+  } 
 
   if (basket.length === 0) {
     return (
@@ -249,7 +252,7 @@ function Payment() {
               <h2 className={classes.section_title}>
                 <span className={classes.step_num}>2</span>Payment method
               </h2>
-
+              <form onSubmit={handelpayment}>
               <PaymentMethodCard
                 id="chapa_inline"
                 selected={paymentMethod === "chapa_inline"}
@@ -271,7 +274,7 @@ function Payment() {
                   </svg>
                 }
               />
-
+</form>
               {/* Accepted channels */}
               <div className={classes.channels}>
                 <span className={classes.channels_label}>Accepted via Chapa:</span>

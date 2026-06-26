@@ -21,7 +21,17 @@ const chapa = new Chapa({
 // Initialize payment
 app.post("/accept-payment", async (req, res) => {
   try {
-    const { amount, email, first_name, last_name, phone_number } = req.body;
+    console.log("Request body:", req.body);
+
+    let { amount, email, first_name, last_name, phone_number } = req.body;
+
+    // Fix 1: normalize phone number to Ethiopian local format
+    phone_number = phone_number.replace(/\s+/g, "").trim();
+    if (phone_number.startsWith("+251")) phone_number = "0" + phone_number.slice(4);
+    if (phone_number.startsWith("251"))  phone_number = "0" + phone_number.slice(3);
+
+    // Fix 2: convert amount to string
+    amount = String(amount);
 
     const tx_ref = await chapa.genTxRef();
 

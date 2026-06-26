@@ -489,3 +489,16 @@
     font-size: 1.3rem;
   }
 }
+@media screen and (max-width: 768px) {
+    .flex{
+        flex-direction: column;
+    }
+    
+}
+.loading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgb(105, 230, 252)
+}
