@@ -1,0 +1,277 @@
+.header_container {
+  background-color: #1B2A3B;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+.fixed {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+/* Logo */
+.logo_container a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.logo_box {
+  background: #4EA8DE;
+  border-radius: 8px;
+  padding: 5px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo_text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo_shop {
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+}
+
+.logo_hub {
+  font-size: 17px;
+  font-weight: 700;
+  color: #4EA8DE;
+  line-height: 1;
+}
+
+.logo_sub {
+  font-size: 9px;
+  color: #8899AA;
+  letter-spacing: 2px;
+}
+
+/* Delivery */
+.delivery {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 0.5px solid #2E4057;
+  cursor: pointer;
+}
+
+.delivery p {
+  font-size: 10px;
+  color: #8899AA;
+  margin: 0;
+}
+
+.delivery span {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+
+/* Search */
+.search {
+  flex: 1;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #4EA8DE;
+}
+
+.search select {
+  background: #2E4057;
+  color: #ccc;
+  border: none;
+  padding: 0 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-right: 0.5px solid #3E5068;
+  outline: none;
+}
+
+.search input {
+  flex: 1;
+  background: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 14px;
+  outline: none;
+  color: #1B2A3B;
+}
+
+.search_icon {
+  background: #4EA8DE;
+  border: none;
+  padding: 0 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.search_icon:hover { background: #3a8fc4; }
+
+/* Language */
+.language {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 0.5px solid #2E4057;
+  cursor: pointer;
+}
+
+.language select {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.language select option {
+  background: #1B2A3B;
+}
+
+/* Sign In */
+.signin a {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 0.5px solid #2E4057;
+  text-decoration: none;
+}
+
+.signin p {
+  font-size: 10px;
+  color: #8899AA;
+  margin: 0;
+}
+
+.signin span {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+
+/* Orders */
+.orders a {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 0.5px solid #2E4057;
+  text-decoration: none;
+}
+
+.orders p {
+  font-size: 10px;
+  color: #8899AA;
+  margin: 0;
+}
+
+.orders span {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+
+/* Cart */
+.order_container a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 0.5px solid #4EA8DE;
+  text-decoration: none;
+  color: white;
+}
+
+.cart_icon_wrap {
+  position: relative;
+}
+
+.cart_count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #4EA8DE;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order_container p {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+/* Lower Header */
+.lower_container {
+  background: #162231;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.all_btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 0.5px solid #2E4057;
+  color: #ccc;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.nav_btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.nav_btn:hover, .all_btn:hover {
+  color: white;
+  background: #2E4057;
+}
+
+.flash_deals {
+  margin-left: auto;
+  background: #1E3A5F;
+  padding: 5px 12px;
+  border-radius: 6px;
+  color: #4EA8DE;
+  font-size: 11px;
+  font-weight: 700;
+}
